@@ -10,6 +10,7 @@ import java.util.List;
 public class SingleLinkedListRequest {
 
 	private String listName;
+	private List<String> listElements = new ArrayList<String>();
 
 	public String getListName() {
 		return listName;
@@ -27,6 +28,6 @@ public class SingleLinkedListRequest {
 		this.listElements = listElements;
 	}
 
-	private List<String> listElements = new ArrayList<String>();
+
 
 }

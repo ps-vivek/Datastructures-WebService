@@ -38,12 +38,12 @@ public class SingleLinkedListController {
 		SingleLinkedListResponse sllResponse = new SingleLinkedListResponse();
 		JAXBContext context = JAXBContext.newInstance(SingleLinkedListResponse.class);
 		try {
-			if (sllRequest != null && sllRequest.getListName() != null && sllRequest.getListElements() != null
+			if (sllRequest != null && sllRequest.getListName() != null && !sllRequest.getListName().isEmpty() && sllRequest.getListElements() != null
 					&& sllRequest.getListElements().size() > 0) {
 				sllResponse = sllService.appendToTail(sllRequest);
 			} else {
 				sllResponse.setStatus(SingleLinkedListConstants.FAILURE);
-				sllResponse.setDescription(SingleLinkedListConstants.FAILURE_APPEND_DESCRIPTION);
+				sllResponse.setDescription(SingleLinkedListConstants.INVALID_INPUT_ERROR);
 			}
 		} catch (UniqueListNameViolationException e) {
 			logger.error(e.getMessage());

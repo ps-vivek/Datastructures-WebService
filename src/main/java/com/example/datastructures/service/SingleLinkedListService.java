@@ -7,6 +7,8 @@ package com.example.datastructures.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import com.example.datastructures.response.SingleLinkedListResponse;
 
 @Service
 public class SingleLinkedListService {
+	public static final Logger logger = LoggerFactory.getLogger(SingleLinkedListService.class);
+
 	@Autowired
 	private SingleLinkedListDao sllDao;
 
@@ -43,11 +47,12 @@ public class SingleLinkedListService {
 	 *
 	 * @param value
 	 */
-	public SingleLinkedListResponse appendToSLL(SingleLinkedListRequest sllRequest) throws Exception {
+	public SingleLinkedListResponse appendToTail(SingleLinkedListRequest sllRequest) throws Exception {
 		// Check whether the list exists in the db
 		// If it exists, throw an exception, saying list is already present and can't be
 		// edited
 		// If it does not exist, add the list to mongo db
+		logger.info("SingleLinkedListService.appendToTail=>Entered");
 		SingleLinkedListResponse sllResponse = new SingleLinkedListResponse();
 		boolean isListNameAvailable = sllDao.isListNameAvailable(sllRequest.getListName());
 		if (isListNameAvailable) {
@@ -81,10 +86,12 @@ public class SingleLinkedListService {
 			sllResponse.setStatus(SingleLinkedListConstants.FAILURE);
 			sllResponse.setDescription(SingleLinkedListConstants.DUPLICATE_LIST_NAME_EXCEPTION_MESSAGE);
 		}
+		logger.info("SingleLinkedListService.appendToTail=>Exited");
 		return sllResponse;
 	}
 
 	public void insertSllIntoDb(SingleLinkedList head, String listName) {
+		logger.info("SingleLinkedListService.insertSllIntoDb=>Entered");
 		SingleLinkedListModel sllModel = new SingleLinkedListModel();
 		sllModel.setSllName(listName);
 		List<SingleLinkedListStructure> sllList = new ArrayList<>();
@@ -94,13 +101,13 @@ public class SingleLinkedListService {
 			sllNode.setData(temp.data);
 			sllNode.setNext(temp.next != null ? temp.next.toString() : "null");
 			sllList.add(sllNode);
-			System.out.print(temp.data + " " + temp.next + ",");
+			logger.debug("SingleLinkedListService.insertSllIntoDb=>" + temp.data + " " + temp.next + ",");
 			temp = temp.next;
 		}
 		sllModel.setSllData(sllList);
-		System.out.println("Sll Model" + sllModel);
+		logger.debug("SingleLinkedListService.insertSllIntoDb=SllModel:" + sllModel);
 		sllDao.insertSllIntoDb(sllModel);
-		System.out.println("Invoked here");
+		logger.info("SingleLinkedListService.insertSllIntoDb=>Exited");
 
 	}
 }

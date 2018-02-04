@@ -10,9 +10,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DataStructureUtils {
+	public static final Logger logger = LoggerFactory.getLogger(DataStructureUtils.class);
 
 	public static String convertJavaObjToXml(JAXBContext context, Object object) {
+		logger.info("DataStructureUtils.convertJavaObjToXml=>Entered");
 		StringWriter xmlResponse = new StringWriter();
 		try {
 
@@ -23,7 +28,7 @@ public class DataStructureUtils {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-
+		logger.info("DataStructureUtils.convertJavaObjToXml=>Exited");
 		return xmlResponse.toString();
 	}
 

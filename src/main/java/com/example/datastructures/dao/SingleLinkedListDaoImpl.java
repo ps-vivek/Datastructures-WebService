@@ -37,7 +37,6 @@ public class SingleLinkedListDaoImpl implements SingleLinkedListDaoCustom {
 				.addCriteria(Criteria.where(SingleLinkedListConstants.SINGLE_LINKED_LIST_NAME).is(listName));
 		int size = mongoTemplate.find(findSllByNameCountQuery, SingleLinkedListModel.class).size();
 		if (size > 1) {
-			System.out.println("Size:" + size);
 			throw new UniqueListNameViolationException(SingleLinkedListConstants.DUPLICATE_LIST_NAME_RETRIEVED_MESSAGE);
 		}
 		logger.info("SingleLinkedListDaoImpl.isListNameAvailable=>Exited");

@@ -2,7 +2,7 @@
  * Author: Vivek
  * Date: 02/04/2018
  */
-package com.example.datastructures.constants;
+package com.example.datastructures.constants.stack;
 
 import com.example.datastructures.utils.Constants;
 
@@ -17,6 +17,9 @@ public class StackConstants extends Constants {
 	public static final String IS_BALANCED_TRUE = "YES";
 	public static final String IS_BALANCED_FALSE = "NO";
 	public static final String FAILURE_IN_CHECKING_ISBALANCED = "Failed to check whether the symbols are properly balanced";
+	public static final String PATTERN_BALANCED = "Given pattern is balanced";
+	public static final String PATTERN_NOT_BALANCED = "Given pattern is not balanced";
+	public static final String PATTERN = "pattern";
 	
 	
 	

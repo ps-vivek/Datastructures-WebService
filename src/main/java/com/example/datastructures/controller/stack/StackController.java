@@ -2,7 +2,7 @@
  * Author: Vivek
  * Date: 02/04/2018
  */
-package com.example.datastructures.controller;
+package com.example.datastructures.controller.stack;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.datastructures.constants.StackConstants;
-import com.example.datastructures.response.StackResponse;
-import com.example.datastructures.service.StackService;
+import com.example.datastructures.constants.stack.StackConstants;
+import com.example.datastructures.response.stack.StackResponse;
+import com.example.datastructures.service.stack.StackService;
 import com.example.datastructures.utils.DataStructureUtils;
 
 @RestController
@@ -40,9 +40,9 @@ public class StackController {
 			stackResponse.setStatus(StackConstants.SUCCESS);
 			if (pattern != null && !"".equals(pattern)) {
 				if("YES".equals(stackService.isBalanced(pattern))){
-					stackResponse.setDescription(StackConstants.IS_BALANCED_TRUE);
+					stackResponse.setDescription(StackConstants.PATTERN_BALANCED);
 				}else {
-					stackResponse.setDescription(StackConstants.IS_BALANCED_FALSE);
+					stackResponse.setDescription(StackConstants.PATTERN_NOT_BALANCED);
 				}
 			} else {
 				stackResponse.setStatus(StackConstants.FAILURE);

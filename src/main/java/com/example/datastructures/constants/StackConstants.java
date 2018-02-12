@@ -16,6 +16,7 @@ public class StackConstants extends Constants {
 	public static final Character CLOSE_SQUARE_BRACES = ']';
 	public static final String IS_BALANCED_TRUE = "YES";
 	public static final String IS_BALANCED_FALSE = "NO";
+	public static final String FAILURE_IN_CHECKING_ISBALANCED = "Failed to check whether the symbols are properly balanced";
 	
 	
 	

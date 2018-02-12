@@ -20,37 +20,45 @@ public class StackService {
 
 	Map<Character, Character> symbolMap = new HashMap<>();
 
+	public StackService() {
+		loadSymbolMap();
+	}
+
 	/*
 	 * 1) Break the string and iterate into characters. Initialize stack, 2) If char
-	 * is '{', '[' or '(' add in a stack else go to next step 3) If char is any closing
-	 * symbol, then check whether the corresponding last element in stack is its
-	 * opening symbol. If opening symbol is different than closing symbol, then
+	 * is '{', '[' or '(' add in a stack else go to next step 3) If char is any
+	 * closing symbol, then check whether the corresponding last element in stack is
+	 * its opening symbol. If opening symbol is different than closing symbol, then
 	 * brackets are not balanced. 4) Repeat the above step for all the characters.
-	 * If there are no elements in stack at end of iterating all characters, then the pattern is balanced one.
+	 * If there are no elements in stack at end of iterating all characters, then
+	 * the pattern is balanced one.
 	 */
-	private String isBalanced(String pattern) {
+	public String isBalanced(String pattern) {
+		// If pattern exists in the db, return the result
 		Stack<Character> stack = new Stack<Character>();
-		loadSymbolMap();
+
 		for (Character ch : pattern.toCharArray()) {
 			if ((ch.equals(StackConstants.OPEN_PARANTHESIS)) || (ch.equals(StackConstants.OPEN_FLOWER_BRACES))
 					|| (ch.equals(StackConstants.OPEN_SQUARE_BRACES))) {
 				stack.push(ch);
+				continue;
 			}
 
 			switch (ch) {
 			case ']':
 				if (!isStackBalanced(stack, StackConstants.CLOSE_SQUARE_BRACES))
 					return StackConstants.IS_BALANCED_FALSE;
+				break;
 
 			case '}':
 				if (!isStackBalanced(stack, StackConstants.CLOSE_FLOWER_BRACES))
-
 					return StackConstants.IS_BALANCED_FALSE;
+				break;
 
 			case ')':
 				if (!isStackBalanced(stack, StackConstants.CLOSE_PARANTHESIS))
-
 					return StackConstants.IS_BALANCED_FALSE;
+				break;
 
 			}
 
@@ -59,6 +67,7 @@ public class StackService {
 			return StackConstants.IS_BALANCED_FALSE;
 		}
 
+		// Insert the pattern along with the result to db
 		return StackConstants.IS_BALANCED_TRUE;
 
 	}

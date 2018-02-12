@@ -19,10 +19,10 @@ import com.example.datastructures.model.stack.IsBalancedStackModel;
 
 @Service
 public class StackService {
-	
+
 	@Autowired
 	StackDao stackDao;
-	
+
 	public static final Logger logger = LoggerFactory.getLogger(StackService.class);
 
 	Map<Character, Character> symbolMap = new HashMap<>();
@@ -41,49 +41,57 @@ public class StackService {
 	 * the pattern is balanced one.
 	 */
 	public String isBalanced(String pattern) throws Exception {
+		logger.info("StackService.isBalanced=>Entered");
 		String isBalanced = "";
 		IsBalancedStackModel isBalancedStackModel;
-		
+
 		try {
-		//Check whether the pattern is already present in db. If so directly return the result
-		isBalanced = stackDao.fetchIsBalancedStackResult(pattern);
-		if(isBalanced != null && !"".equals(isBalanced)) {
-			return isBalanced;
-		}
-		
-		isBalancedStackModel = new IsBalancedStackModel();
-		isBalancedStackModel.setPattern(pattern);
-		isBalanced = isBalancedHelper(pattern);
-		if(isBalanced.equals(StackConstants.IS_BALANCED_TRUE)) {
-			isBalancedStackModel.setIsBalanced(StackConstants.IS_BALANCED_TRUE);
-		}else {
-			isBalancedStackModel.setIsBalanced(StackConstants.IS_BALANCED_FALSE);
-		}
-		// Insert the pattern along with the result to db
-		stackDao.insertIntoIsBalancedStack(isBalancedStackModel);
-		}
-		catch(Exception e) {
+			// Check whether the pattern is already present in db. If so directly return the
+			// result
+			isBalanced = stackDao.fetchIsBalancedStackResult(pattern);
+			if (isBalanced != null && !"".equals(isBalanced)) {
+				return isBalanced;
+			}
+
+			isBalancedStackModel = new IsBalancedStackModel();
+			isBalancedStackModel.setPattern(pattern);
+			isBalanced = isBalancedHelper(pattern);
+			if (isBalanced.equals(StackConstants.IS_BALANCED_TRUE)) {
+				isBalancedStackModel.setIsBalanced(StackConstants.IS_BALANCED_TRUE);
+			} else {
+				isBalancedStackModel.setIsBalanced(StackConstants.IS_BALANCED_FALSE);
+			}
+			// Insert the pattern along with the result to db
+			stackDao.insertIntoIsBalancedStack(isBalancedStackModel);
+		} catch (Exception e) {
 			throw new Exception(e);
 		}
+		logger.info("StackService.isBalanced=>Exited");
 		return isBalanced;
 
 	}
 
 	private void loadSymbolMap() {
+		logger.info("StackService.loadSymbolMap=>Entered");
 		symbolMap.put(StackConstants.CLOSE_PARANTHESIS, StackConstants.OPEN_PARANTHESIS);
 		symbolMap.put(StackConstants.CLOSE_FLOWER_BRACES, StackConstants.OPEN_FLOWER_BRACES);
 		symbolMap.put(StackConstants.CLOSE_SQUARE_BRACES, StackConstants.OPEN_SQUARE_BRACES);
+		logger.info("StackService.loadSymbolMap=>Exited");
 	}
 
 	private boolean isStackBalanced(Stack<Character> stack, Character ch) {
+		logger.info("StackService.isStackBalanced=>Entered");
 		boolean isStackBalanced = false;
 		if (!stack.isEmpty() && stack.peek().equals(symbolMap.get(ch))) {
 			stack.pop();
 			isStackBalanced = true;
 		}
+		logger.info("StackService.isStackBalanced=>Exited");
 		return isStackBalanced;
 	}
+
 	public String isBalancedHelper(String pattern) {
+		logger.info("StackService.isBalancedHelper=>Entered");
 		Stack<Character> stack = new Stack<Character>();
 
 		for (Character ch : pattern.toCharArray()) {
@@ -116,8 +124,8 @@ public class StackService {
 			return StackConstants.IS_BALANCED_FALSE;
 		}
 
-
+		logger.info("StackService.isBalancedHelper=>Exited");
 		return StackConstants.IS_BALANCED_TRUE;
-		
+
 	}
 }
